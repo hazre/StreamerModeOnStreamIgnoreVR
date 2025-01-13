@@ -25,6 +25,9 @@ This plugin prevents Streamer Mode from being automatically activated when VR-re
 
 ## DOWNLOAD INSTRUCTIONS
 
+> [!NOTE]
+> Installation instructions copied from [ScattrdBlade/customSounds](https://github.com/ScattrdBlade/customSounds/blob/main/README.md)
+
 You can either **clone** the repository OR **manually install** it by downloading it as a zip file.<br/>
 
 > [!WARNING]
