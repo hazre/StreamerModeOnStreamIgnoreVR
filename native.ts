@@ -35,13 +35,3 @@ export async function isProcessesRunning(_, processes: string): Promise<boolean>
 
     return processStatuses.some(status => status === true);
 }
-export async function isProcessesRunningText(_, processes: string): Promise<Record<string, boolean>> {
-    const processesToCheck = processes.split(',').map(p => p.trim());
-    const processStatus: Record<string, boolean> = {};
-
-    for (const process of processesToCheck) {
-        processStatus[process] = await isProcessRunning(process);
-    }
-
-    return processStatus;
-}
