@@ -30,7 +30,7 @@ interface StreamEvent {
 export const settings = definePluginSettings({
     processesToCheck: {
         type: OptionType.STRING,
-        description: "seperated by comma",
+        description: "Comma-separated list of VR process names to prevent Streamer Mode activation",
         default: 'vrserver.exe,VirtualDesktop.Server.exe'
     }
 });
@@ -53,7 +53,7 @@ async function toggleStreamerMode({ streamKey }: StreamEvent, value: boolean) {
 
 export default definePlugin({
     name: "StreamerModeOnStreamIgnoreVR",
-    description: "Automatically enables streamer mode when you start streaming in Discord",
+    description: "Automatically enables streamer mode when you start streaming in Discord (Disabled when in VR)",
     authors: [
         {
             id: 98468422114869248n,
