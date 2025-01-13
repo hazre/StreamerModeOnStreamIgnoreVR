@@ -1,6 +1,7 @@
 
 import process from 'node:process';
 
+// https://stackoverflow.com/questions/38033127/node-js-how-to-check-a-process-is-running-by-the-process-name/58844917#58844917
 async function isProcessRunning(processName: string): Promise<boolean> {
     const cmd = (() => {
         switch (process.platform) {
