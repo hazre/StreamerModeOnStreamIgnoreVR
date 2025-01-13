@@ -1,6 +1,6 @@
 # StreamerModeOnStreamIgnoreVR
 
-Automatically manages Discord's Streamer Mode with VR considerations.
+A Vencord plugin that automatically manages Discord's Streamer Mode with VR considerations.
 
 Fork of [StreamerModeOnStream](https://github.com/Vendicated/Vencord/blob/3243120baaa56f65866b532b731bc3426512c90e/src/plugins/streamerModeOnStream/index.ts).
 
