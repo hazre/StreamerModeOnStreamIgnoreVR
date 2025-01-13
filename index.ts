@@ -1,0 +1,68 @@
+/*
+ * Vencord, a modification for Discord's desktop app
+ * Copyright (c) 2024 Vendicated and contributors
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import { definePluginSettings } from "@api/Settings";
+import definePlugin, { OptionType } from "@utils/types";
+import { FluxDispatcher, UserStore } from "@webpack/common";
+import type { PluginNative } from "@utils/types";
+
+const Native = VencordNative.pluginHelpers.StreamerModeOnStreamIgnoreVR as PluginNative<typeof import("./native")>;
+
+interface StreamEvent {
+    streamKey: string;
+}
+
+export const settings = definePluginSettings({
+    processesToCheck: {
+        type: OptionType.STRING,
+        description: "seperated by comma",
+        default: 'vrserver.exe,VirtualDesktop.Server.exe'
+    }
+});
+
+async function toggleStreamerMode({ streamKey }: StreamEvent, value: boolean) {
+    if (!streamKey.endsWith(UserStore.getCurrentUser().id)) return;
+
+    // override if processes are running
+    if (await Native.isProcessesRunning(settings.plain.processesToCheck) && value != false) {
+        value = false;
+    }
+
+    FluxDispatcher.dispatch({
+        type: "STREAMER_MODE_UPDATE",
+        key: "enabled",
+        value
+    });
+}
+
+
+export default definePlugin({
+    name: "StreamerModeOnStreamIgnoreVR",
+    description: "Automatically enables streamer mode when you start streaming in Discord",
+    authors: [
+        {
+            id: 98468422114869248n,
+            name: "hazre",
+        }
+    ],
+    flux: {
+        STREAM_CREATE: d => toggleStreamerMode(d, true),
+        STREAM_DELETE: d => toggleStreamerMode(d, false)
+    },
+    settings
+});
